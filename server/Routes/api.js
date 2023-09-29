@@ -36,7 +36,7 @@ const router = express.Router();
         
       } catch (e) {
         console.log(e);
-        res.status(400).json(e);
+        res.status(500).json({ error: 'Internal Server Error' });
       }
   });
     
@@ -70,7 +70,7 @@ const router = express.Router();
         }
       } catch (e) {
         console.log(e);
-        res.status(500).json('Internal Server Error');
+        res.status(500).json({ error: 'Internal Server Error' });
       }
   });
     
@@ -78,7 +78,6 @@ const router = express.Router();
     try {
       const userDoc = req.user;
       const tokenToLogout = req.cookies.jwtoken;
-      console.log(req.userId);
 
       if (userDoc && tokenToLogout) {
           await userDoc.logout(tokenToLogout);
@@ -90,18 +89,16 @@ const router = express.Router();
       }
   } catch (e) {
       console.error(e);
-      res.status(500).json('Internal Server Error');
+      res.status(500).json({ error: 'Internal Server Error' });
   }
 
   });
 
-  router.get('/getdata', authenticate,(req,res)=>{
+  router.get('/userdata', authenticate,(req,res)=>{
       
     res.json(req.user);
 
   });
-
-
 
 router.post('/tasks',authenticate ,async (req, res) => {
   try {
@@ -110,10 +107,11 @@ router.post('/tasks',authenticate ,async (req, res) => {
       description: req.body.description,
       dueDate: req.body.dueDate,
       priority: req.body.priority,
-      createdBy: req.user._id, // Assuming user is authenticated
+      createdBy: req.user._id, 
     };
 
     const task = await Task.create(taskData);
+
     if(task){
       res.json({ message: 'Task created successfully'});
       console.log(task);
@@ -125,10 +123,10 @@ router.post('/tasks',authenticate ,async (req, res) => {
   }
 });
 
-// Get all tasks for a user (Read)
+
 router.get('/tasks', authenticate ,async (req, res) => {
   try {
-    const userId = req.user._id; // Assuming user is authenticated
+    const userId = req.user._id; 
     const tasks = await Task.find({ createdBy: userId }).exec();
     res.json(tasks);
   } catch (error) {
@@ -137,8 +135,8 @@ router.get('/tasks', authenticate ,async (req, res) => {
   }
 });
 
-// Update a task by ID (Update)
-router.put('/tasks/:taskId', async (req, res) => {
+
+router.put('/tasks/:taskId',authenticate, async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const taskData = {
@@ -157,15 +155,18 @@ router.put('/tasks/:taskId', async (req, res) => {
   }
 });
 
-// Delete a task by ID (Delete)
-router.delete('/tasks/:taskId', async (req, res) => {
+
+router.delete('/tasks/:taskId', authenticate,async (req, res) => {
   try {
     const taskId = req.params.taskId;
     const deletedTask = await Task.findByIdAndRemove(taskId);
+
     if (!deletedTask) {
       return res.status(404).json({ error: 'Task not found' });
+    }else{
+      res.json({ message: 'Task deleted successfully' });
     }
-    res.json({ message: 'Task deleted successfully' });
+   
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
