@@ -5,12 +5,14 @@ const apiRoutes = require('./Routes/api');
 const PORT = process.env.PORT;
 const cookieParser = require('cookie-parser');
 const app = express();
-
+// db connection
 require('./DB/conn.js');
 
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
+//Routes
 app.use('/api',apiRoutes);
 
 app.get('/', (req, res) => {

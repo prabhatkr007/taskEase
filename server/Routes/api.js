@@ -1,11 +1,10 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const ObjectId = require('mongoose').Types.ObjectId;
 const User = require('../models/User');
-const Todo = require('../models/Todos');
+const Task = require('../models/Task');
 const authenticate = require('../middleware/auth');
 const salt = bcrypt.genSaltSync(10);
+
 const router = express.Router();
 
 
@@ -13,7 +12,7 @@ const router = express.Router();
       const { username, password } = req.body;
     
       if (!username || !password) {
-        return res.status(400).json('Username and password are required');
+        return res.status(400).json({ message:'Username and Password are required'});
       }
     
       try {
@@ -39,20 +38,20 @@ const router = express.Router();
         console.log(e);
         res.status(400).json(e);
       }
-    });
+  });
     
-    router.post('/login', async (req, res) => {
+  router.post('/login', async (req, res) => {
       const { username, password } = req.body;
     
       if (!username || !password) {
-        return res.status(400).json('Username and password are required');
+        return res.status(400).json({ message:'Username and Password are required'});
       }
     
       try {
         const userDoc = await User.findOne({ username });
     
         if (!userDoc) {
-          return res.status(400).json('User not found');
+          return res.status(400).json({ error:'User not found'});
         }
     
         const passOk = bcrypt.compareSync(password, userDoc.password);
@@ -67,33 +66,109 @@ const router = express.Router();
       });
         res.json({ message: 'User signed in successfully'});
         } else {
-          res.status(400).json('Wrong credentials');
+          res.status(400).json({ error:'Wrong credentials'});
         }
       } catch (e) {
         console.log(e);
         res.status(500).json('Internal Server Error');
       }
-    });
+  });
     
-    
-  
-  
   router.post('/logout',authenticate, async (req, res) => {
     try {
       const userDoc = req.user;
       const tokenToLogout = req.cookies.jwtoken;
+      console.log(req.userId);
 
       if (userDoc && tokenToLogout) {
           await userDoc.logout(tokenToLogout);
           res.clearCookie('jwtoken');
-          res.status(200).json('Logged out successfully'); 
+          res.status(200).json({ message:'Logged out successfully'}); 
       } 
       else {
-          res.status(400).json("User not authenticated"); 
+          res.status(400).json({ error:"User not authenticated"}); 
       }
   } catch (e) {
       console.error(e);
       res.status(500).json('Internal Server Error');
+  }
+
+  });
+
+  router.get('/getdata', authenticate,(req,res)=>{
+      
+    res.json(req.user);
+
+  });
+
+
+
+router.post('/tasks',authenticate ,async (req, res) => {
+  try {
+    const taskData = {
+      title: req.body.title,
+      description: req.body.description,
+      dueDate: req.body.dueDate,
+      priority: req.body.priority,
+      createdBy: req.user._id, // Assuming user is authenticated
+    };
+
+    const task = await Task.create(taskData);
+    if(task){
+      res.json({ message: 'Task created successfully'});
+      console.log(task);
+    }
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Get all tasks for a user (Read)
+router.get('/tasks', authenticate ,async (req, res) => {
+  try {
+    const userId = req.user._id; // Assuming user is authenticated
+    const tasks = await Task.find({ createdBy: userId }).exec();
+    res.json(tasks);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Update a task by ID (Update)
+router.put('/tasks/:taskId', async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const taskData = {
+      title: req.body.title,
+      description: req.body.description,
+      dueDate: req.body.dueDate,
+      priority: req.body.priority,
+      completed: req.body.completed,
+    };
+
+    const updatedTask = await Task.findByIdAndUpdate(taskId, taskData, { new: true });
+    res.json(updatedTask);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Delete a task by ID (Delete)
+router.delete('/tasks/:taskId', async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const deletedTask = await Task.findByIdAndRemove(taskId);
+    if (!deletedTask) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    res.json({ message: 'Task deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

@@ -36,6 +36,8 @@ userSchema.methods.generateAuthToken = async function (){
     }
 }
 
+// deleting token while logout
+
 userSchema.methods.logout = async function (tokenToLogout) {
     try {
         this.tokens = this.tokens.filter(tokenObj => tokenObj.token !== tokenToLogout);
