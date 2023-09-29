@@ -1,0 +1,58 @@
+/* Navbar container styles */
+.navbar-container {
+  background-color: #164678;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 20px;
+  margin-bottom: 25px;
+}
+
+
+.navbar-container h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+
+.navbar-container ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-container ul li {
+  font-size: 18px;
+}
+
+
+.navbar-container a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+
+.navbar-container a:hover {
+  text-decoration: underline;
+}
+
+.logout-button {
+  background-color: white;
+  color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.logout-button:hover {
+  background-color: #badaea;
+}

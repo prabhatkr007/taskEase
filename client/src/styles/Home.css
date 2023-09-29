@@ -1,0 +1,30 @@
+/* TodoApp.css */
+
+.todo-app-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .todo-app {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 900px;
+  }
+  
+  .greeting {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .loading {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  /* Add more styles as needed */
+  

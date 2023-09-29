@@ -12,7 +12,7 @@ const router = express.Router();
       const { username, password } = req.body;
     
       if (!username || !password) {
-        return res.status(400).json({ message:'Username and Password are required'});
+        return res.status(400).json({ error:'Username and Password are required !'});
       }
     
       try {
@@ -28,7 +28,7 @@ const router = express.Router();
           const userRegister = await user.save();
 
           if (userRegister) {
-            res.status(201).json({ message: "User registered successfully" });
+            res.status(201).json({ message: "User registered successfully !" });
           } else {
             res.status(500).json({ error: "Failed to register" });
           }
@@ -44,7 +44,7 @@ const router = express.Router();
       const { username, password } = req.body;
     
       if (!username || !password) {
-        return res.status(400).json({ message:'Username and Password are required'});
+        return res.status(400).json({ error:'Username and Password are required !'});
       }
     
       try {
@@ -64,7 +64,7 @@ const router = express.Router();
         httpOnly: true, 
         sameSite: 'none'
       });
-        res.json({ message: 'User signed in successfully'});
+        res.json({ message: 'User signed in successfully !'});
         } else {
           res.status(400).json({ error:'Wrong credentials'});
         }
@@ -82,7 +82,7 @@ const router = express.Router();
       if (userDoc && tokenToLogout) {
           await userDoc.logout(tokenToLogout);
           res.clearCookie('jwtoken');
-          res.status(200).json({ message:'Logged out successfully'}); 
+          res.status(200).json({ message:'Logged out successfully !'}); 
       } 
       else {
           res.status(400).json({ error:"User not authenticated"}); 
@@ -96,11 +96,15 @@ const router = express.Router();
 
   router.get('/userdata', authenticate,(req,res)=>{
       
-    res.json(req.user);
+    res.json(req.user.username);
 
   });
 
 router.post('/tasks',authenticate ,async (req, res) => {
+  if(!req.body){
+
+    res.json({error:"Empty list can't be created"})
+  }
   try {
     const taskData = {
       title: req.body.title,
@@ -113,7 +117,7 @@ router.post('/tasks',authenticate ,async (req, res) => {
     const task = await Task.create(taskData);
 
     if(task){
-      res.json({ message: 'Task created successfully'});
+      res.json({ message: 'Task created successfully !'});
       console.log(task);
     }
     
@@ -124,16 +128,20 @@ router.post('/tasks',authenticate ,async (req, res) => {
 });
 
 
-router.get('/tasks', authenticate ,async (req, res) => {
+router.get('/tasks', authenticate, async (req, res) => {
   try {
     const userId = req.user._id; 
-    const tasks = await Task.find({ createdBy: userId }).exec();
+    const tasks = await Task.find({ createdBy: userId })
+      .sort({ createdAt: -1 })
+      .exec();
+
     res.json(tasks);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 
 router.put('/tasks/:taskId',authenticate, async (req, res) => {
@@ -164,9 +172,8 @@ router.delete('/tasks/:taskId', authenticate,async (req, res) => {
     if (!deletedTask) {
       return res.status(404).json({ error: 'Task not found' });
     }else{
-      res.json({ message: 'Task deleted successfully' });
-    }
-   
+      res.json({ message: 'Task deleted successfully !' });
+    } 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
