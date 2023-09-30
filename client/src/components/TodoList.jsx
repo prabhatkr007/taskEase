@@ -3,40 +3,29 @@ import "../styles/Todolist.css"
 function TodoList({ todos, deleteTodo, toggleComplete, updateTodo, priorityFilter, dueDateFilter ,fetchTodos }) {
 
   
-  const [updatedTitle, setUpdatedTitle] = useState('');
-  const [updatedPriority, setUpdatedPriority] = useState('medium');
+  const [title, setUpdatedTitle] = useState('');
+  const [priority, setUpdatedPriority] = useState('medium');
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleUpdateClick = (id) => {
-    // Call the updateTodo function with the updated data
-    updateTodo(id, updatedTitle, updatedPriority);
-    // Clear the input fields after updating
-    setUpdatedTitle('');
-    setUpdatedPriority('medium');
-    setIsEditing(false); // Disable editing mode after updating
-  };
+
+
 const filteredTodos = todos.filter((todo) => {
-  // Filter by priority
+  
   if (priorityFilter !== 'all' && todo.priority !== priorityFilter) {
     return false;
   }
 
-  // Filter by due date
   if (dueDateFilter !== 'all' && todo.dueDate !== dueDateFilter) {
     return false;
   }
 
-  return true; // Include in the filtered list
+  return true; 
 });
 
-  const handleToggleComplete = async (id) => {
-    // Find the task by id
+const handleToggleComplete = async (id) => {
+  
     const taskToToggle = todos.find((todo) => todo._id === id);
-
-    // Toggle the completion status
     taskToToggle.completed = !taskToToggle.completed;
-
-    // Send a PUT request to update the task's completion status
     try {
       const response = await fetch(`/api/tasks/${id}`, {
         method: 'PUT',
@@ -47,9 +36,7 @@ const filteredTodos = todos.filter((todo) => {
           completed: taskToToggle.completed,
         }),
       });
-
       if (!response.ok) {
-        // Handle error if the request fails
         console.error('Failed to toggle task completion.');
       }
       fetchTodos();
@@ -57,6 +44,15 @@ const filteredTodos = todos.filter((todo) => {
       console.error(error);
     }
   };
+
+const handleUpdateClick = (id) => {
+    updateTodo(id, title, priority);
+    setUpdatedTitle('');
+    setUpdatedPriority('medium');
+    setIsEditing(false);
+    fetchTodos();
+  };
+
 
   return (
     <ul>
@@ -77,16 +73,21 @@ const filteredTodos = todos.filter((todo) => {
             <p>Due Date: {new Date(todo.dueDate).toLocaleString()}</p>
             <p>Created At: {new Date(todo.createdAt).toLocaleString()}</p>
           </div>
+
+
+
+
+
           {isEditing ? (
             <div>
               <input
                 type="text"
                 placeholder="Updated Title"
-                value={updatedTitle}
+                value={title}
                 onChange={(e) => setUpdatedTitle(e.target.value)}
               />
               <select
-                value={updatedPriority}
+                value={priority}
                 onChange={(e) => setUpdatedPriority(e.target.value)}
               >
                 <option value="high">High</option>

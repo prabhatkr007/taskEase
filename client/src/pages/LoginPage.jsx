@@ -1,11 +1,13 @@
 import React,{ useState} from 'react'
 import '../styles/Login.css'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../reducer/useReducer';
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { state, dispatch } = useAuth(); 
 
   async function login(ev) {
     ev.preventDefault();
@@ -22,6 +24,7 @@ export default function LoginPage() {
       if (!response.ok) {
         window.alert(error); 
       }else{
+        dispatch({ type: 'USER_AUTHENTICATED' });
         window.alert(message);
         navigate("/")
       }

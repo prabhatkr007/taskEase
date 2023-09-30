@@ -1,29 +1,29 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import "../styles/Navbar.css";
+import { useAuth } from '../reducer/useReducer';
 
 function Navbar() {
   const navigate = useNavigate();
+  const { state, dispatch } = useAuth(); 
 
-  const handleLogout = async() => {
-
+  const handleLogout = async () => {
     try {
-      const response =  await fetch("api/logout", {
-         method: "POST",
-       });
-       const {error, message} = await response.json();
+      const response = await fetch("/api/logout", {
+        method: "POST",
+      });
+      const { error, message } = await response.json();
 
-       if (!response.ok) {
-         window.alert(error); 
-       }else{
-         window.alert(message);
-         navigate("/login")
-       }
-     } catch (error) {
-       console.error(error);
-     }
-   
-   
+      if (!response.ok) {
+        window.alert(error);
+      } else {
+        dispatch({ type: 'USER_LOGGED_OUT' });
+        window.alert(message);
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -36,19 +36,23 @@ function Navbar() {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/login" activeClassName="active-link">
-              Login
-            </NavLink>
-          </li>
+          {!state ? ( // Only render "Login" link if the user is not logged in
+            <li>
+              <NavLink to="/login" activeClassName="active-link">
+                Login
+              </NavLink>
+            </li>
+          ) : null}
           <li>
             <NavLink to="/signup" activeClassName="active-link">
               Sign Up
             </NavLink>
           </li>
-          <li className="logout-button" onClick={handleLogout}>
-            Logout
-          </li>
+          {state ? (
+            <li className="logout-button" onClick={handleLogout}>
+              Logout
+            </li>
+          ) : null}
         </ul>
       </div>
     </nav>

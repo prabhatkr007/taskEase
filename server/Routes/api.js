@@ -51,7 +51,7 @@ const router = express.Router();
         const userDoc = await User.findOne({ username });
     
         if (!userDoc) {
-          return res.status(400).json({ error:'User not found'});
+          return res.status(400).json({ error:'Wrong credentials'});
         }
     
         const passOk = bcrypt.compareSync(password, userDoc.password);
@@ -149,14 +149,16 @@ router.put('/tasks/:taskId',authenticate, async (req, res) => {
     const taskId = req.params.taskId;
     const taskData = {
       title: req.body.title,
-      description: req.body.description,
-      dueDate: req.body.dueDate,
       priority: req.body.priority,
-      completed: req.body.completed,
     };
 
     const updatedTask = await Task.findByIdAndUpdate(taskId, taskData, { new: true });
-    res.json(updatedTask);
+    if (!updatedTask) {
+      return res.status(404).json({ error: 'Failed to update' });
+    }else{
+      res.json({ message: 'Task updated successfully !' });
+    } 
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

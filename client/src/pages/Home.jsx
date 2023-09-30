@@ -7,6 +7,7 @@ function TodoApp() {
   const [todos, setTodos] = useState([]);
   const [username, setUsername] = useState(''); 
   const navigate = useNavigate();
+  
   useEffect(() => {
     fetchTodos();
     fetchUserData();
@@ -93,40 +94,31 @@ function TodoApp() {
     }
   }
 
-  async function toggleComplete(id) {
+  async function updateTodo(id, title, priority) {
     try {
       const response = await fetch(`/api/tasks/${id}`, {
         method: 'PUT',
-       
+        body: JSON.stringify({title, priority}),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-
+  
       const data = await response.json();
-      const{error, message} = data;
-
+      const { error, message } = data;
+  
       if (!response.ok) {
         window.alert(error);
         return;
-      }else{
-        const updatedTodos = todos.map((todo) => {
-          if (todo.id === id) {
-            return {
-              ...todo,
-              completed: !todo.completed,
-            };
-          }
-          return todo;
-        });
-          window.alert(message);
-          setTodos(updatedTodos);
+      } else {
+      
+        window.alert(message);
       }
-      fetchTodos();
-      // Update the completion status of the todo in the todos array
-      
-      
     } catch (error) {
       console.error(error);
     }
   }
+  
 
   return (
     <div className="todo-app-container">
@@ -139,7 +131,7 @@ function TodoApp() {
         <h1>Todo List</h1>
         <TodoForm addTodo={addTodo} />
        
-        <TodoList todos={todos} fetchTodos={fetchTodos} deleteTodo={deleteTodo} toggleComplete={toggleComplete}  />
+        <TodoList todos={todos} fetchTodos={fetchTodos} deleteTodo={deleteTodo} updateTodo={updateTodo}  />
        
 
       </div>
