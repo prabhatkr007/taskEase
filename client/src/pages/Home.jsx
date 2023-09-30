@@ -3,12 +3,15 @@ import TodoList from '../components/TodoList';
 import TodoForm from '../components/Todoform';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Home.css"
+import { useAuth } from '../reducer/useReducer';
+
 function TodoApp() {
   const [todos, setTodos] = useState([]);
   const [username, setUsername] = useState(''); 
   const [priorityFilter, setPriorityFilter] = useState('all');
   const [completedFilter, setCompletedFilter] = useState('all');
   const navigate = useNavigate();
+  const { state, dispatch } = useAuth(); 
 
   useEffect(() => {
     fetchTodos();
@@ -20,6 +23,8 @@ function TodoApp() {
       const response = await fetch('/api/userdata'); // Replace with your API endpoint
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
+      }else{
+        dispatch({ type: 'USER_AUTHENTICATED' });
       }
       const userData = await response.json();
       setUsername(userData);
@@ -177,8 +182,8 @@ function TodoApp() {
         onChange={(e) => setCompletedFilter(e.target.value)}
       >
         <option value="all">All</option>
-        <option value={true}>Completed</option>
-        <option value={false}>Not Completed</option>
+        <option value="true">Completed</option>
+        <option value="false">Not Completed</option>
       </select>
       </span>
       </div>
