@@ -6,13 +6,14 @@ import "../styles/Home.css"
 function TodoApp() {
   const [todos, setTodos] = useState([]);
   const [username, setUsername] = useState(''); 
+  const [priorityFilter, setPriorityFilter] = useState('all');
+  const [completedFilter, setCompletedFilter] = useState('all');
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     fetchTodos();
     fetchUserData();
   }, []);
-
 
   async function fetchUserData() {
     try {
@@ -27,7 +28,6 @@ function TodoApp() {
     }
   }
 
-
   async function fetchTodos() {
     try {
       const response = await fetch('/api/tasks');
@@ -37,9 +37,9 @@ function TodoApp() {
         window.alert(error);
         navigate("/login")    
       }else{
-        console.log(data);
+        setTodos(data);
       }
-      setTodos(data);
+     
     } catch (error) {
       console.error(error);
     }
@@ -119,6 +119,31 @@ function TodoApp() {
     }
   }
   
+  async function toggleComplete(id) {
+    try {
+      const todoToToggle = todos.find((todo) => todo._id === id);
+      todoToToggle.completed = !todoToToggle.completed;
+      console.log(todoToToggle);
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          completed: todoToToggle.completed,
+        }),
+      });
+  
+      if (!response.ok) {
+        console.log('Failed to toggle task completion.');
+      } else {
+        fetchTodos();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
   return (
     <div className="todo-app-container">
@@ -129,12 +154,45 @@ function TodoApp() {
           <p className="loading">Loading user data...</p>
         )}
         <h1>Todo List</h1>
-        <TodoForm addTodo={addTodo} />
-       
-        <TodoList todos={todos} fetchTodos={fetchTodos} deleteTodo={deleteTodo} updateTodo={updateTodo}  />
-       
 
+        <TodoForm addTodo={addTodo} />
+
+        <div>
+          <span>
+        <label>Filter by Priority: </label>
+        <select
+          value={priorityFilter}
+          onChange={(e) => setPriorityFilter(e.target.value)}
+        >
+          <option value="all">All</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        </span>
+        <span>
+        <label>Tasks: </label>
+        <select
+        value={completedFilter}
+        onChange={(e) => setCompletedFilter(e.target.value)}
+      >
+        <option value="all">All</option>
+        <option value={true}>Completed</option>
+        <option value={false}>Not Completed</option>
+      </select>
+      </span>
       </div>
+  
+
+        <TodoList todos={todos} 
+        priorityFilter={priorityFilter} 
+        completedFilter={completedFilter} 
+        fetchTodos={fetchTodos} 
+        deleteTodo={deleteTodo} 
+        updateTodo={updateTodo} 
+        toggleComplete= {toggleComplete} />
+      </div>
+
     </div>
   );
 }

@@ -13,7 +13,7 @@
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    width: 900px;
+    min-width:1000px;
   }
   
   .greeting {
@@ -24,6 +24,10 @@
   .loading {
     font-size: 16px;
     margin-bottom: 10px;
+  }
+
+  span{
+    margin: 5px;
   }
   
   /* Add more styles as needed */

@@ -1,24 +1,63 @@
-/* Add this CSS to style your TodoList items as cards */
+
 .todo-list-item {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #fff;
-  }
-  
-  .todo-list-item.completed {
-    background-color: #f0f0f0; /* Change the background color for completed items */
-    text-decoration: line-through; /* Add strikethrough for completed items */
-  }
-
-
-.todo-list-container {
-  max-height: 400px; /* Set a max height for the container */
-  overflow-y: auto; /* Add vertical scrollbar when content overflows */
+  display: inline-block; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin: 5px;
+  background-color: #fff;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+.todo-list-item.completed {
+  background-color: #f0f0f0; 
+  text-decoration: line-through; 
 }
 
-  
+.todo-list-item button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+}
 
-  
+.todo-list-item button.edit-button {
+  background-color: #007bff; 
+  color: #fff; 
+}
+
+.todo-list-item button.delete-button {
+  background-color: #dc3545; 
+  color: #fff;
+}
+
+.todo-list-item button.mark-completed-button {
+  background-color: #28a745; 
+  color: #fff;
+}
+
+.todo-list-item button:hover,
+.todo-list-item button:focus {
+  opacity: 0.8;
+}
+
+
+select {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+}
+
+.todo-list-item p {
+  margin: 5px 0; 
+  font-size: 14px; 
+  color: #333; 
+}

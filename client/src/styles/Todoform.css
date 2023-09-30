@@ -1,4 +1,4 @@
-/* Add this CSS to style the input boxes within your TodoForm component */
+
 .todo-form input[type="text"],
 .todo-form select {
   width: auto;

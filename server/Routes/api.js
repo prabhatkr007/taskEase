@@ -150,6 +150,7 @@ router.put('/tasks/:taskId',authenticate, async (req, res) => {
     const taskData = {
       title: req.body.title,
       priority: req.body.priority,
+      completed:req.body.completed
     };
 
     const updatedTask = await Task.findByIdAndUpdate(taskId, taskData, { new: true });
