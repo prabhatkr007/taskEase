@@ -1,0 +1,31 @@
+.notification {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 4rem;
+  right: -100%; /* Start from the right outside the viewport */
+  width: 250px;
+  background-color: #4caf50;
+  color: white;
+  padding: 8px;
+  text-align: center;
+  transition: right 1.5s ease-in-out; /* Transition the 'right' property */
+  border-radius: 10px;
+}
+
+.notification.error {
+  background-color: #f44336;
+}
+
+.notification.show {
+  right: 0; /* Slide in to the viewport when 'show' class is applied */
+}
+
+.notification button {
+  background: none;
+  border: none;
+  color: inherit;
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}

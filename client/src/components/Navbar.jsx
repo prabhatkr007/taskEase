@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import "../styles/Navbar.css";
 import { useAuth } from '../reducer/useReducer';
 
-function Navbar() {
+function Navbar({showCustomNotification}) {
   const navigate = useNavigate();
   const { state, dispatch } = useAuth(); 
 
@@ -15,10 +15,10 @@ function Navbar() {
       const { error, message } = await response.json();
 
       if (!response.ok) {
-        window.alert(error);
+        showCustomNotification(error, true);
       } else {
         dispatch({ type: 'USER_LOGGED_OUT' });
-        window.alert(message);
+        showCustomNotification(message);
         navigate("/login");
       }
     } catch (error) {

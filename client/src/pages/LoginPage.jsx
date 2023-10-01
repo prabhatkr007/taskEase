@@ -4,12 +4,13 @@ import '../styles/loader.css'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../reducer/useReducer';
 
-export default function LoginPage() {
+
+export default function LoginPage({showCustomNotification}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
-  const { state, dispatch } = useAuth();
+  const { dispatch } = useAuth();
 
   async function login(ev) {
     ev.preventDefault();
@@ -25,11 +26,11 @@ export default function LoginPage() {
       const { error, message } = await response.json();
 
       if (!response.ok) {
-        window.alert(error);
+        showCustomNotification(error, true);
       } else {
         dispatch({ type: 'USER_AUTHENTICATED' });
-        window.alert(message);
         navigate('/');
+        showCustomNotification(message);
       }
     } catch (error) {
       console.error(error);
@@ -40,12 +41,14 @@ export default function LoginPage() {
 
   return (
     <div className="form-container">
+         
       {isLoading ? ( 
         <div className="loader-container">
           <div className="loader"></div>
         </div>
       ) : (
         <form className="login" onSubmit={login}>
+          
           <h1>Login</h1>
 
           <input
@@ -63,6 +66,7 @@ export default function LoginPage() {
           />
           <button>Login</button>
         </form>
+        
       )}
     </div>
   );

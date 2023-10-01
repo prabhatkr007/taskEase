@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Register.css';
 import '../styles/loader.css'
-export default function RegisterPage() {
+export default function RegisterPage({showCustomNotification}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Added loading state
@@ -21,9 +21,9 @@ export default function RegisterPage() {
       const { error, message } = await response.json();
 
       if (!response.ok) {
-        window.alert(error);
+        showCustomNotification(error, true);
       } else {
-        window.alert(message);
+        showCustomNotification(message);
         navigate('/login');
       }
     } catch (error) {

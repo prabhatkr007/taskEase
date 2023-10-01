@@ -5,13 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import "../styles/Home.css"
 import { useAuth } from '../reducer/useReducer';
 
-function TodoApp() {
+
+function TodoApp({showCustomNotification}) {
   const [todos, setTodos] = useState([]);
   const [username, setUsername] = useState(''); 
   const [priorityFilter, setPriorityFilter] = useState('all');
   const [completedFilter, setCompletedFilter] = useState('all');
+
   const navigate = useNavigate();
-  const { state, dispatch } = useAuth(); 
+  const { dispatch } = useAuth(); 
+
+
+
 
   useEffect(() => {
     fetchTodos();
@@ -22,7 +27,7 @@ function TodoApp() {
     try {
       const response = await fetch('/api/userdata');
       if (!response.ok) {
-        throw new Error('Failed to fetch user data');
+        showCustomNotification('Failed to fetch user data');
       }else{
         dispatch({ type: 'USER_AUTHENTICATED' });
       }
@@ -39,7 +44,7 @@ function TodoApp() {
       const data= await response.json();
       const{error} = data;
       if (!response.ok) {
-        window.alert(error);
+        showCustomNotification(error, true);
         navigate("/login")    
       }else{
         setTodos(data);
@@ -63,11 +68,11 @@ function TodoApp() {
       const{error, message} = data;
 
       if (!response.ok) {
-        window.alert(error);
+       showCustomNotification(error, true);
         return;
       }else{
          
-          window.alert(message);
+          showCustomNotification(message);
           setTodos([...todos, data]);
       }
       
@@ -85,13 +90,16 @@ function TodoApp() {
       const data = await response.json();
       const { error, message } = data;
   
+
       if (!response.ok) {
-        window.alert(error);
+        showCustomNotification(error,true);
         return;
       } else {
         const updatedTodos = todos.filter((todo) => todo._id !== id);
-        window.alert(message);
         setTodos(updatedTodos);
+        showCustomNotification(message);
+       
+        
       }
     } catch (error) {
       console.error(error);
@@ -112,11 +120,10 @@ function TodoApp() {
       const { error, message } = data;
   
       if (!response.ok) {
-        window.alert(error);
+        showCustomNotification(error,true);
         return;
       } else {
-      
-        window.alert(message);
+        showCustomNotification(message);
       }
     } catch (error) {
       console.error(error);
@@ -137,10 +144,12 @@ function TodoApp() {
           completed: todoToToggle.completed,
         }),
       });
-  
+      const {message, error} = response;
+
       if (!response.ok) {
-        console.log('Failed to toggle task completion.');
+        showCustomNotification("Failed to Update !", true);
       } else {
+        showCustomNotification("Updated !");
         fetchTodos();
       }
     } catch (error) {
@@ -150,7 +159,9 @@ function TodoApp() {
   
 
   return (
+    
     <div className="todo-app-container">
+   
       <div className="todo-app">
         {username ? (
           <p className="greeting">Hi {username}</p>

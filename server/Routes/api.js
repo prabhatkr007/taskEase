@@ -173,7 +173,7 @@ router.delete('/tasks/:taskId', authenticate,async (req, res) => {
     const deletedTask = await Task.findByIdAndRemove(taskId);
 
     if (!deletedTask) {
-      return res.status(404).json({ error: 'Task not found' });
+      res.status(404).json({ error: 'Task not found' });
     }else{
       res.json({ message: 'Task deleted successfully !' });
     } 
