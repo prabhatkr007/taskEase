@@ -43,11 +43,13 @@ function Navbar() {
               </NavLink>
             </li>
           ) : null}
+          {!state ? ( 
           <li>
             <NavLink to="/signup" activeClassName="active-link">
               Sign Up
             </NavLink>
           </li>
+          ) : null}
           {state ? (
             <li className="logout-button" onClick={handleLogout}>
               Logout
