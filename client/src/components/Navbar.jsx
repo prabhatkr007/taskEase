@@ -36,7 +36,7 @@ function Navbar() {
               Home
             </NavLink>
           </li>
-          {!state ? ( // Only render "Login" link if the user is not logged in
+          {!state ? ( 
             <li>
               <NavLink to="/login" activeClassName="active-link">
                 Login

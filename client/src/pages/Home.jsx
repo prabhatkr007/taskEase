@@ -20,7 +20,7 @@ function TodoApp() {
 
   async function fetchUserData() {
     try {
-      const response = await fetch('/api/userdata'); // Replace with your API endpoint
+      const response = await fetch('/api/userdata');
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }else{
@@ -89,7 +89,6 @@ function TodoApp() {
         window.alert(error);
         return;
       } else {
-        // Filter out the deleted task from the todos state
         const updatedTodos = todos.filter((todo) => todo._id !== id);
         window.alert(message);
         setTodos(updatedTodos);

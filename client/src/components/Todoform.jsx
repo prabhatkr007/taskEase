@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import "../styles/Todoform.css"
 function TodoForm({ addTodo }) {
-    const [priorityFilter, setPriorityFilter] = useState('all');
-    const [dueDateFilter, setDueDateFilter] = useState('all');
-    
+  
   const [newTodo, setNewTodo] = useState({
     title: '',
     description: '',
     completed: false,
-    dueDate: '', // You can set this to a default or let users input it
-    priority: 'medium', // You can set this to a default or let users select it
+    dueDate: '',
+    priority: 'medium',
   });
 
   const handleSubmit = (e) => {
@@ -20,8 +18,8 @@ function TodoForm({ addTodo }) {
         title: '',
         description: '',
         completed: false,
-        dueDate: '', // Reset dueDate
-        priority: 'medium', // Reset priority
+        dueDate: '', 
+        priority: 'medium',
       });
     }
   };

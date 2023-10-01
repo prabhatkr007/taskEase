@@ -18,7 +18,7 @@ function TodoItem({ todo, deleteTodo, toggleComplete, updateTodo, fetchTodos }) 
             textDecoration: todo.completed ? 'line-through' : 'none',
             cursor: 'pointer',
           }}
-          onClick={() => toggleComplete(todo._id)} // Use toggleComplete directly here
+          onClick={() => toggleComplete(todo._id)}
         >
           <strong>{todo.title}</strong>
         </span>
@@ -62,7 +62,7 @@ function TodoItem({ todo, deleteTodo, toggleComplete, updateTodo, fetchTodos }) 
           className={`complete-button ${
             todo.completed ? 'unmark-button' : 'mark-button'
           }`}
-          onClick={() => toggleComplete(todo._id)} // Use toggleComplete directly here
+          onClick={() => toggleComplete(todo._id)}
         >
           {todo.completed ? 'Unmark Completed' : 'Mark Completed'}
         </button>
