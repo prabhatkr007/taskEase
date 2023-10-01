@@ -25,7 +25,7 @@ A simple Todo application built using the MERN (MongoDB, Express.js, React, Node
 ## Installation and Setup
 
 1. Clone the repository: `git clone https://github.com/prabhatkr007/Todo.git`
-2. Navigate to the project directory: `cd Blog-App`
+2. Navigate to the project directory: `cd Todo`
 3. Navigate to the server directory: `cd server`
 4. Install server dependencies: `npm install`
 5. Create a `config.env` file in the root directory of the server.
