@@ -101,11 +101,12 @@ const router = express.Router();
   });
 
 router.post('/tasks',authenticate ,async (req, res) => {
-  if(!req.body){
-
-    res.json({error:"Empty list can't be created"})
-  }
+  console.log(req.body.title);
   try {
+    if(req.body.title === ""){
+      res.json({error:"Empty Task can't be created !"});
+      
+    }
     const taskData = {
       title: req.body.title,
       description: req.body.description,

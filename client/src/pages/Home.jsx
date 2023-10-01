@@ -27,7 +27,7 @@ function TodoApp({showCustomNotification}) {
     try {
       const response = await fetch('/api/userdata');
       if (!response.ok) {
-        showCustomNotification('Failed to fetch user data', true);
+        return;
       }else{
         dispatch({ type: 'USER_AUTHENTICATED' });
       }
@@ -147,9 +147,9 @@ function TodoApp({showCustomNotification}) {
       const {message, error} = response;
 
       if (!response.ok) {
-        showCustomNotification("Failed to Update !", true);
+        showCustomNotification("Failed to update !", true);
       } else {
-        showCustomNotification("Updated !");
+        showCustomNotification("Task updated !");
         fetchTodos();
       }
     } catch (error) {
