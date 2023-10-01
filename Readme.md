@@ -69,22 +69,19 @@ Make sure you have Node.js and MongoDB installed on your machine.
 
 ## Security Measures
 
-### Password Hashing:
 
 - User passwords are securely hashed before storage to protect user data.
 
-### Session Management:
+
 
 - Sessions are managed securely, and sensitive data is stored in HTTP-only cookies.
 
-### Middleware:
+
 
 - Middleware is used for authentication and authorization to protect routes and endpoints.
 
-### Environment Variables:
 
 - Sensitive information like database credentials and session secrets is stored in environment variables.
 
-### Error Handling:
 
 - Robust error handling is implemented to handle unexpected issues gracefully.
