@@ -14,6 +14,7 @@ A simple Todo application built using the MERN (MongoDB, Express.js, React, Node
 - Mark as Completed: Toggle task completion status.
 - Filters: Filter tasks by priority and completion status.
 - Responsive Design: Access your tasks on various devices.
+- Custom Notification: Receive real-time notifications for successful and failed actions.
 
 ## Technologies Used
 
