@@ -27,7 +27,7 @@ function TodoApp({showCustomNotification}) {
     try {
       const response = await fetch('/api/userdata');
       if (!response.ok) {
-        showCustomNotification('Failed to fetch user data');
+        showCustomNotification('Failed to fetch user data', true);
       }else{
         dispatch({ type: 'USER_AUTHENTICATED' });
       }

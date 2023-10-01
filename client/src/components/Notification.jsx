@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../styles/Notification.css';
 
 function Notification({ message, isError, onClose }) {
