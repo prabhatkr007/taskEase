@@ -1,0 +1,90 @@
+# MERN Todo App
+
+A simple Todo application built using the MERN (MongoDB, Express.js, React, Node.js) stack. This app allows users to manage their tasks effectively.
+
+![Todo App Screenshot](https://i.imgur.com/Zibn8eW.png)
+
+## Features
+
+- User Registration: Register with a username and password.
+- User Authentication: Log in securely with your credentials.
+- Create Todos: Add tasks with titles, descriptions, due dates, and priorities.
+- Update Todos: Edit task titles and priorities.
+- Delete Todos: Remove tasks you no longer need.
+- Mark as Completed: Toggle task completion status.
+- Filters: Filter tasks by priority and completion status.
+- Responsive Design: Access your tasks on various devices.
+
+## Technologies Used
+
+- **Frontend:** React.js, React Router,
+- **Backend:** Node.js, Express.js, MongoDB
+- **Authentication:** JWT (JSON Web Tokens)
+- **Styling:** CSS (Custom Styles)
+
+## Installation and Setup
+
+1. Clone the repository: `git clone https://github.com/prabhatkr007/Todo.git`
+2. Navigate to the project directory: `cd Blog-App`
+3. Navigate to the server directory: `cd server`
+4. Install server dependencies: `npm install`
+5. Create a `config.env` file in the root directory of the server.
+6. Inside the `config.env` file, add the following environment variables:
+
+```
+# MongoDB Connection URI
+DATABASE=your_mongodb_connection_uri
+
+# JWT Secret Key (for user authentication)
+SECRET_KEY=your_jwt_secret_key
+
+# Other Configuration Variables
+PORT=4000
+```
+
+7. Start the development server: `npm start`
+8. Go back to the project directory: `cd ..`
+9. Navigate to the client directory: `cd client`
+10. Install client dependencies: `npm install`
+11. Start the client: `npm start`
+
+Make sure you have Node.js and MongoDB installed on your machine.
+
+## Authentication Flow
+
+### User Registration:
+
+1. Users can register by providing a username and password.
+2. The backend validates the data, hashes the password, and stores it in the database.
+
+### User Login:
+
+1. Registered users can log in with their username and password.
+2. The backend validates the credentials, creates a session, and returns an authentication token 
+
+### Session Management:
+
+1. Sessions are managed using secure HTTP cookies or tokens.
+2. Users remain logged in until they log out or the session expires.
+
+## Security Measures
+
+### Password Hashing:
+
+- User passwords are securely hashed before storage to protect user data.
+
+### Session Management:
+
+- Sessions are managed securely, and sensitive data is stored in HTTP-only cookies.
+
+### Middleware:
+
+- Middleware is used for authentication and authorization to protect routes and endpoints.
+
+### Environment Variables:
+
+- Sensitive information like database credentials and session secrets is stored in environment variables.
+
+### Error Handling:
+
+- Robust error handling is implemented to handle unexpected issues gracefully.
