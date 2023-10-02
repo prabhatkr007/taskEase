@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import "../styles/Todoform.css"
+import '../styles/Todoform.css';
+
 function TodoForm({ addTodo }) {
-  
   const [newTodo, setNewTodo] = useState({
     title: '',
     description: '',
     completed: false,
-    dueDate: '',
+    dueDate: '', // This should be in the format 'YYYY-MM-DDTHH:mm'
     priority: 'medium',
   });
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +20,7 @@ function TodoForm({ addTodo }) {
         title: '',
         description: '',
         completed: false,
-        dueDate: '', 
+        dueDate: '', // Reset the dueDate
         priority: 'medium',
       });
     }
@@ -36,11 +38,14 @@ function TodoForm({ addTodo }) {
         type="text"
         placeholder="Description"
         value={newTodo.description}
-        onChange={(e) => setNewTodo({ ...newTodo, description: e.target.value })}
+        onChange={(e) =>
+          setNewTodo({ ...newTodo, description: e.target.value })
+        }
       />
+      {/* Use the datetime-local input */}
       <input
-        type="text"
-        placeholder="Due Date"
+        type="datetime-local"
+        placeholder="Due Date and Time"
         value={newTodo.dueDate}
         onChange={(e) => setNewTodo({ ...newTodo, dueDate: e.target.value })}
       />
@@ -52,6 +57,7 @@ function TodoForm({ addTodo }) {
         <option value="medium">Medium</option>
         <option value="low">Low</option>
       </select>
+      
       <button type="submit">Add</button>
     </form>
   );

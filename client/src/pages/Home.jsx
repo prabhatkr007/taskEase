@@ -11,6 +11,7 @@ function TodoApp({showCustomNotification}) {
   const [username, setUsername] = useState(''); 
   const [priorityFilter, setPriorityFilter] = useState('all');
   const [completedFilter, setCompletedFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('none');
 
   const navigate = useNavigate();
   const { dispatch } = useAuth(); 
@@ -196,12 +197,24 @@ function TodoApp({showCustomNotification}) {
         <option value="false">Not Completed</option>
       </select>
       </span>
+      <span>
+      <select
+      value={sortBy}
+      onChange={(e) => setSortBy(e.target.value)} 
+      > 
+    <option value="none">Sort by</option>
+    <option value="dueDateAsc">Due Date (Ascending)</option>
+    <option value="dueDateDesc">Due Date (Descending)</option>
+    </select>
+    </span>
       </div>
+
   
 
         <TodoList todos={todos} 
         priorityFilter={priorityFilter} 
         completedFilter={completedFilter} 
+        sortBy={sortBy}
         fetchTodos={fetchTodos} 
         deleteTodo={deleteTodo} 
         updateTodo={updateTodo} 

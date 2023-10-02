@@ -2,7 +2,7 @@
 .todo-form input[type="text"],
 .todo-form select {
   width: auto;
-  padding: 5px;
+  padding: 6px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -11,6 +11,15 @@
 
 .todo-form select {
   padding: 6px;
+}
+
+.todo-form input[type="datetime-local"] {
+  width: auto;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 5px;
 }
 
 .todo-form button[type="submit"] {
