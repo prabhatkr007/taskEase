@@ -13,8 +13,10 @@ A simple Todo application built using the MERN (MongoDB, Express.js, React, Node
 - Delete Todos: Remove tasks you no longer need.
 - Mark as Completed: Toggle task completion status.
 - Filters: Filter tasks by priority and completion status.
+- Sort by Due Date: Arrange tasks based on their due dates for better organization.
 - Responsive Design: Access your tasks on various devices.
 - Custom Notification: Receive real-time notifications for successful and failed actions.
+
 
 ## Technologies Used
 
