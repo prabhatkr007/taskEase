@@ -169,7 +169,7 @@ function TodoApp({showCustomNotification}) {
         ) : (
           <p className="loading">Loading user data...</p>
         )}
-        <h1>Todo List</h1>
+        <h1>Task List</h1>
 
         <TodoForm addTodo={addTodo} />
 
