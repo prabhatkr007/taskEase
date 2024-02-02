@@ -1,16 +1,16 @@
 # taskEase: Simplifying Your Daily Agenda
 
-A Todo application built using the MERN (MongoDB, Express.js, React, Node.js) stack. This app allows users to manage their tasks effectively.
+taskEase application built using the MERN (MongoDB, Express.js, React, Node.js) stack. This app allows users to manage their tasks effectively.
 
-![Todo App Screenshot](https://i.imgur.com/tsx2NAq.png)
+![taskEase App Screenshot](https://i.imgur.com/tsx2NAq.png)
 
 ## Features
 
 - User Registration: Register with a username and password.
 - User Authentication: Log in securely with your credentials.
-- Create Todos: Add tasks with titles, descriptions, due dates, and priorities.
-- Update Todos: Edit task titles and priorities.
-- Delete Todos: Remove tasks you no longer need.
+- Create taskEases: Add tasks with titles, descriptions, due dates, and priorities.
+- Update taskEases: Edit task titles and priorities.
+- Delete taskEases: Remove tasks you no longer need.
 - Mark as Completed: Toggle task completion status.
 - Filters: Filter tasks by priority and completion status.
 - Sort by Due Date: Arrange tasks based on their due dates for better organization.
@@ -26,8 +26,8 @@ A Todo application built using the MERN (MongoDB, Express.js, React, Node.js) st
 
 ## Installation and Setup
 
-1. Clone the repository: `git clone https://github.com/prabhatkr007/Todo.git`
-2. Navigate to the project directory: `cd Todo`
+1. Clone the repository: `git clone https://github.com/prabhatkr007/taskEase.git`
+2. Navigate to the project directory: `cd taskEase`
 3. Navigate to the server directory: `cd server`
 4. Install server dependencies: `npm install`
 5. Create a `config.env` file in the root directory of the server.
